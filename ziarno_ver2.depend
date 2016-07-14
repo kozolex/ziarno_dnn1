@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1468361525 source:d:\dropbox\programowanie\doktorat\ziarno_ver2\main.cpp
+	"opencv2/highgui/highgui.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	<iostream>
+	<io.h>
+
+1468403868 source:c:\users\dell1\dropbox\programowanie\doktorat\ziarno_ver2\main.cpp
+	"opencv2/highgui/highgui.hpp"
+	"opencv2/imgproc/imgproc.hpp"
+	<iostream>
+	<io.h>
+
