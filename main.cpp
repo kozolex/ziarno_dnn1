@@ -18,7 +18,7 @@ _finddata_t danePliku;
 int licz = 0;
 
 
-///*****************************************FUNCJONS***************************
+///*****************************************FUNCJONS*****************************
 
 template <typename T>  string NumberToString ( T Number ) //  int to string
 {
