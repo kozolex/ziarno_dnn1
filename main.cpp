@@ -141,6 +141,18 @@ int main( int argc, char** argv )
                         {
                             bigest = contourArea( contours2[j],false);
                             roi2 = roi( boundingRect(contours2[j])); // set ROI 2
+
+                            /// Get the moments
+                            vector<Moments> mu(contours2.size() );
+
+                                mu[j] = moments( contours2[j], false );
+
+                            ///  Get the mass centers:
+                            vector<Point2f> mc( contours2.size() );
+                                mc[j] = Point2f( mu[j].m10/mu[j].m00, mu[j].m01/mu[j].m00 );
+                                circle( roi, mc[j], 4, Scalar( 255, 255, 255 ), -1, 8, 0 );
+                                imshow( "CENTER "+NumberToString(j),  roi);
+
                         }
                     }
 /// Detection UP / DOWN
@@ -226,8 +238,8 @@ int main( int argc, char** argv )
 
                     if (roi2.cols <= 80 && roi2.rows <= 170)
                     {
-                    diffrent_size_w = 80-roi2.cols;
-                    diffrent_size_h = 170-roi2.rows;
+                        diffrent_size_w = 80-roi2.cols;
+                        diffrent_size_h = 170-roi2.rows;
                         if (diffrent_size_w%2 == 0 && diffrent_size_h%2 == 0)
                             copyMakeBorder( roi2, roi2, diffrent_size_h/2,diffrent_size_h/2, diffrent_size_w/2, diffrent_size_w/2,BORDER_CONSTANT,0);
                         else if (diffrent_size_w%2 != 0 && diffrent_size_h%2 != 0)
@@ -235,8 +247,9 @@ int main( int argc, char** argv )
                         else if (diffrent_size_w%2 != 0 && diffrent_size_h%2 == 0)
                             copyMakeBorder( roi2, roi2, diffrent_size_h/2,diffrent_size_h/2, diffrent_size_w/2 + 1, diffrent_size_w/2,BORDER_CONSTANT,0);
                         else if (diffrent_size_w%2 == 0 && diffrent_size_h%2 != 0)
-                        copyMakeBorder( roi2, roi2, diffrent_size_h/2+1,diffrent_size_h/2, diffrent_size_w/2 , diffrent_size_w/2,BORDER_CONSTANT,0);
-                    } else if (roi2.cols > 80 || roi2.rows > 170) tmp_flag = 1;
+                            copyMakeBorder( roi2, roi2, diffrent_size_h/2+1,diffrent_size_h/2, diffrent_size_w/2, diffrent_size_w/2,BORDER_CONSTANT,0);
+                    }
+                    else if (roi2.cols > 80 || roi2.rows > 170) tmp_flag = 1;
 
 ///WRITE and SORT  DATA
                     //putText(roi2, NumberToString(valeysize), Point(0, 10),FONT_HERSHEY_DUPLEX, 0.4, cvScalar(255,255,255), 1, CV_AA);
@@ -258,8 +271,8 @@ int main( int argc, char** argv )
                         imwrite("gr/" + iplik + danePliku.name, roi2 );
                         //imwrite("gr/" + iplik + "1" + danePliku.name, roi_grey_sob ); //B&W
                     }
-            //namedWindow( "Contours", CV_WINDOW_AUTOSIZE );
-            //imshow( "Contours", drawing );
+                    //namedWindow( "Contours", CV_WINDOW_AUTOSIZE );
+                    //imshow( "Contours", drawing );
                     //licz++;
                     // cout << "zapisano "<<licz<< " plikow\n";
 
@@ -278,7 +291,7 @@ int main( int argc, char** argv )
                     //txt
                     putText(drawing, NumberToString(topsize), Point(minEllipse[i].center.x + minEllipse[i].size.width/4 +20, minEllipse[i].center.y + minEllipse[i].size.height/2-100),FONT_HERSHEY_DUPLEX, 0.4, cvScalar(0,0,200), 1, CV_AA);
                     putText(drawing, NumberToString(downsize), Point(minEllipse[i].center.x + minEllipse[i].size.width/4 +20, minEllipse[i].center.y + minEllipse[i].size.height/2-50),FONT_HERSHEY_DUPLEX, 0.4, cvScalar(0,250,0), 1, CV_AA);
-    */
+                    */
 ///Open small windows with roi obiects
                     //namedWindow( "roi_"+NumberToString(i), CV_WINDOW_AUTOSIZE );
                     //imshow( "roi_"+NumberToString(i), roi2 );
