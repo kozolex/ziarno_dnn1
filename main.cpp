@@ -134,27 +134,29 @@ int main( int argc, char** argv )
                     /// Find contours
                     findContours( threshold_output2, contours2, hierarchy2, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
                     int bigest=0;
+                    int which_bigest=0;
 
                     for( int j = 0; j< contours2.size(); j++ )
                     {
                         if(contourArea( contours2[j],false) > bigest)
                         {
                             bigest = contourArea( contours2[j],false);
+                            which_bigest = j;
                             roi2 = roi( boundingRect(contours2[j])); // set ROI 2
-
-                            /// Get the moments
-                            vector<Moments> mu(contours2.size() );
-
-                                mu[j] = moments( contours2[j], false );
-
-                            ///  Get the mass centers:
-                            vector<Point2f> mc( contours2.size() );
-                                mc[j] = Point2f( mu[j].m10/mu[j].m00, mu[j].m01/mu[j].m00 );
-                                circle( roi, mc[j], 4, Scalar( 255, 255, 255 ), -1, 8, 0 );
-                                imshow( "CENTER "+NumberToString(j),  roi);
-
                         }
+
                     }
+/// Get the moments
+                    vector<Moments> mu(contours2.size() );
+
+                    mu[which_bigest] = moments( contours2[which_bigest], false );
+
+///  Get the mass centers:
+                    vector<Point2f> mc( contours2.size() );
+                    mc[which_bigest] = Point2f( mu[which_bigest].m10/mu[which_bigest].m00, mu[which_bigest].m01/mu[which_bigest].m00 );
+                    circle( roi, mc[which_bigest], 4, Scalar( 255, 255, 255 ), -1, 8, 0 );
+                    //imshow( "CENTER "+NumberToString(which_bigest),  roi);
+
 /// Detection UP / DOWN
                     cvtColor( roi2, roi_grey, CV_BGR2GRAY );
                     blur( roi_grey, roi_grey, Size(3,3) );
